@@ -1,9 +1,5 @@
-Here’s a concise and professional `README.md` that summarizes the **technical aspects** of your project:
-
----
-
 ```markdown
-# 🌤️ Portfolio SPA with Animated Cloud Background and Slide Navigation
+# 🌤️ Portfolio with Animated Cloud Background and Slide Navigation
 
 This is a single-page portfolio application built with React and TypeScript. It features a cloud-themed animated background, smooth route-based background color transitions, and reusable slide navigation for showcasing personal info and projects.
 
@@ -21,30 +17,10 @@ This is a single-page portfolio application built with React and TypeScript. It 
 
 ---
 
-## 🗂️ Project Structure
-
-```
-
-src/
-├── App.tsx                     # Main app layout and routing
-├── assets/                     # Cloud images
-├── components/
-│   └── CloudBackground.tsx     # Animated cloud image layer
-├── hooks/
-│   └── useSlideNavigation.ts   # Reusable card & cloud movement logic
-├── pages/
-│   ├── Home.tsx                # Introduction & personal slides
-│   ├── Projects.tsx            # Project showcase with slide nav
-│   └── Contact.tsx             # Static contact page
-
-````
-
----
-
 ## 🔧 Technologies Used
 
-| Tech               | Purpose                                         |
-|--------------------|-------------------------------------------------|
+| Tech                | Purpose                                        |
+|---------------------|------------------------------------------------|
 | **React + Vite**    | Fast development with modern tooling           |
 | **TypeScript**      | Type safety and scalability                    |
 | **Motion One**      | Smooth animations without Framer Motion        |
@@ -62,14 +38,6 @@ The custom hook `useSlideNavigation` handles:
 - Cloud position offsets
 - Direction-aware animation
 - Reusability across pages (e.g., `Home`, `Projects`)
-
-```ts
-const { index, direction, setSlide } = useSlideNavigation(sections.length, {
-  setCloud1X,
-  setCloud2X,
-  setCloud3X,
-});
-````
 
 ---
 
@@ -93,16 +61,6 @@ useEffect(() => {
 
 ---
 
-## 🧪 Future Improvements
-
-* Unit tests using `Vitest` or `Jest`
-* Transition animations between pages
-* Accessibility improvements
-* Form handling on the Contact page
-* Dark mode toggle
-
----
-
 ## 📦 Getting Started
 
 ```bash
@@ -118,14 +76,4 @@ npm run dev
 
 MIT
 
-```
-
----
-
-Let me know if you want to add:
-- Deployment instructions (e.g., Netlify/Vercel)
-- A screenshot or GIF section
-- Credits/acknowledgements
-
-I can also auto-generate the README from your `package.json` if you’d like that.
 ```
