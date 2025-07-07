@@ -1,7 +1,8 @@
-```markdown
 # 🌤️ Portfolio with Animated Cloud Background and Slide Navigation
 
-This is a single-page portfolio application built with React and TypeScript. It features a cloud-themed animated background, smooth route-based background color transitions, and reusable slide navigation for showcasing personal info and projects.
+This is a portfolio application built with React and TypeScript. 
+It features a cloud-themed animated background, smooth route-based background color transitions, 
+and reusable slide navigation for showcasing personal info and projects.
 
 ---
 
@@ -63,17 +64,11 @@ useEffect(() => {
 
 ## 📦 Getting Started
 
-```bash
 npm install
 npm run dev
-```
-
-> Requires Node.js 18+
 
 ---
 
 ## 📄 License
 
 MIT
-
-```
