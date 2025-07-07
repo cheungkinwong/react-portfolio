@@ -1,4 +1,4 @@
-# 🌤️ Portfolio with Animated Cloud Background and Slide Navigation
+# 🌤️ Portfolio with Animated Clouds and Slide Navigation
 
 This is a portfolio application built with React and TypeScript. 
 It features a cloud-themed animated background, smooth route-based background color transitions, 
