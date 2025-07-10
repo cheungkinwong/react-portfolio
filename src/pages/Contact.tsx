@@ -1,7 +1,7 @@
 import { Card, CardMedia, CardContent, Typography, Box } from '@mui/material';
 
 const Contact = () => (
-  <Box display="flex" justifyContent="center">
+  <Box display="flex" justifyContent="center" height="80vh" alignItems="center">
     <Card sx={{ maxWidth: 600 }}>
       <CardMedia
         component="img"
