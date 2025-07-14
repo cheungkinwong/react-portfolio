@@ -20,7 +20,7 @@ const Contact = ({
 
   const {setSlide } = useSlideNavigation(
     'contact',
-    1, // or however many contact cards you have
+    1, 
     { setCloud1X, setCloud2X, setCloud3X },
     {
       onNavigateToProjects: (slideIndex) => navigate(`/projects?index=${slideIndex}`),

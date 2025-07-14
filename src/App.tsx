@@ -71,7 +71,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home setCloud1X={setCloud1X} setCloud2X={setCloud2X} setCloud3X={setCloud3X} />} />
             <Route path="/projects" element={<Projects setCloud1X={setCloud1X} setCloud2X={setCloud2X} setCloud3X={setCloud3X} />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/contact" element={<Contact setCloud1X={setCloud1X} setCloud2X={setCloud2X} setCloud3X={setCloud3X}  />} />
           </Routes>
         </Container>
       </motion.div>
