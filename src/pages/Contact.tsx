@@ -14,18 +14,17 @@ const Contact = ({
   setCloud3X: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const initialIndex = parseInt(searchParams.get('index') || '0', 10);
 
 
   const {setSlide } = useSlideNavigation(
     'contact',
-    1, 
     { setCloud1X, setCloud2X, setCloud3X },
     {
       onNavigateToProjects: (slideIndex) => navigate(`/projects?index=${slideIndex}`),
     },
-    initialIndex
+    initialIndex, setSearchParams
 );
 
   return (

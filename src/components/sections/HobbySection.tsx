@@ -6,8 +6,10 @@ const HobbySection = () => {
   const { hobbies, loading, fetchHobbies } = useHobbyStore();
 
   useEffect(() => {
-    fetchHobbies();
-  }, [fetchHobbies]);
+    if (hobbies.length === 0) {
+      fetchHobbies();
+    }
+  }, [hobbies,fetchHobbies]);
 
   if (loading) return <CircularProgress />;
 

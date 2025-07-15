@@ -2,11 +2,12 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Container, CssBaseline } from '@mui/material';
 import { useState, useEffect, useMemo } from 'react';
 import { motion, useAnimation } from 'motion/react';
-
+import { useAuth } from './hooks/useAuth'
 import Home from './pages/Home';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import CloudBackground from './components/cloudBackground'; 
+import PrivateRoute from './components/PrivateRoute'
 
 const App = () => {
   const [cloud1X, setCloud1X] = useState(0);
@@ -14,6 +15,7 @@ const App = () => {
   const [cloud3X, setCloud3X] = useState(0);
   const location = useLocation();
   const controls = useAnimation();
+  const { isAuthenticated, logout, loading } = useAuth();
 
   useEffect(() => {
     setCloud1X(0);
@@ -37,6 +39,10 @@ const App = () => {
   useEffect(() => {
     controls.start({ backgroundColor: targetColor });
   }, [targetColor, controls]);
+
+  if (loading) {
+    return null 
+  }
 
   return (
     <>
@@ -64,14 +70,38 @@ const App = () => {
             <Button color="inherit" component={Link} to="/">Home</Button>
             <Button color="inherit" component={Link} to="/projects">Projects</Button>
             <Button color="inherit" component={Link} to="/contact">Contact</Button>
+            {isAuthenticated && (
+              <Button color="inherit" onClick={logout}>Logout</Button>
+            )}
           </Toolbar>
         </AppBar>
 
         <Container sx={{ mt: 4, zIndex: 4, position: 'relative' }}>
           <Routes>
-            <Route path="/" element={<Home setCloud1X={setCloud1X} setCloud2X={setCloud2X} setCloud3X={setCloud3X} />} />
-            <Route path="/projects" element={<Projects setCloud1X={setCloud1X} setCloud2X={setCloud2X} setCloud3X={setCloud3X} />} />
-            <Route path="/contact" element={<Contact setCloud1X={setCloud1X} setCloud2X={setCloud2X} setCloud3X={setCloud3X}  />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Home setCloud1X={setCloud1X} setCloud2X={setCloud2X} setCloud3X={setCloud3X} />
+                </PrivateRoute>
+              }
+            />           
+            <Route
+              path="/projects"
+              element={
+                <PrivateRoute>
+                  <Projects setCloud1X={setCloud1X} setCloud2X={setCloud2X} setCloud3X={setCloud3X} />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <PrivateRoute>
+                  <Contact setCloud1X={setCloud1X} setCloud2X={setCloud2X} setCloud3X={setCloud3X} />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </Container>
       </motion.div>

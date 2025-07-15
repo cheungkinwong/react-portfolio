@@ -6,8 +6,10 @@ const WorkExperienceSection = () => {
   const { workExperiences, loading, fetchWorkExperiences } = useWorkExperienceStore();
 
   useEffect(() => {
-    fetchWorkExperiences();
-  }, [fetchWorkExperiences]);
+    if (workExperiences.length === 0) {
+      fetchWorkExperiences();
+    }
+  }, [workExperiences,fetchWorkExperiences]);
 
   if (loading) return <CircularProgress />;
 

@@ -21,21 +21,23 @@ type ProjectsProps = {
 const Projects = ({ setCloud1X, setCloud2X, setCloud3X }: ProjectsProps) => {
   const { projects, loading, fetchProjects } = useProjectStore();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const initialIndex = parseInt(searchParams.get('index') || '0', 10);
   useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
+    if (projects.length === 0) {
+      fetchProjects();
+    }
+  }, [projects, fetchProjects]);
+
 
   const { index, direction, setSlide } = useSlideNavigation(
     'projects',
-    projects.length,
     { setCloud1X, setCloud2X, setCloud3X },
     {
       onNavigateToHome: (slideIndex) => navigate(`/?index=${slideIndex}`),
       onNavigateToContact: (slideIndex) => navigate(`/contact?index=${slideIndex}`),
     },
-    initialIndex
+    initialIndex, setSearchParams
   );
 
   if (loading) {

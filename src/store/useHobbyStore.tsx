@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getBaseUrl } from '../utils/api';
+import api from '../api/apiClient'; 
 
 export type Hobby = {
   id: number;
@@ -19,9 +19,8 @@ export const useHobbyStore = create<HobbyStore>((set) => ({
   fetchHobbies: async () => {
     set({ loading: true });
     try {
-      const res = await fetch(`${getBaseUrl()}/hobby`);
-      const data = await res.json();
-      set({ hobbies: data, loading: false });
+      const res = await api.get<Hobby[]>('/hobby');
+      set({ hobbies: res.data, loading: false });
     } catch (err) {
       console.error('Failed to fetch hobbies', err);
       set({ loading: false });

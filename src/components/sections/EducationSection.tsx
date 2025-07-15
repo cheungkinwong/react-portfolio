@@ -6,8 +6,11 @@ const EducationSection = () => {
   const { educations, loading, fetchEducations } = useEducationStore();
 
   useEffect(() => {
-    fetchEducations();
-  }, [fetchEducations]);
+    if (educations.length === 0) {
+      fetchEducations();
+    }
+  }, [educations,fetchEducations]);
+
 
   if (loading) return <CircularProgress />;
 

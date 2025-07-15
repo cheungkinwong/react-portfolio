@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getBaseUrl } from '../utils/api';
+import api from '../api/apiClient'; 
 
 export type TechnicalSkill = {
   id: number;
@@ -19,9 +19,8 @@ export const useTechnicalSkillStore = create<TechnicalSkillStore>((set) => ({
   fetchTechnicalSkills: async () => {
     set({ loading: true });
     try {
-      const res = await fetch(`${getBaseUrl()}/technicalskill`);
-      const data = await res.json();
-      set({ technicalSkills: data, loading: false });
+      const res = await api.get<TechnicalSkill[]>('/technicalskill');
+      set({ technicalSkills: res.data, loading: false });
     } catch (err) {
       console.error('Failed to fetch technical skills', err);
       set({ loading: false });

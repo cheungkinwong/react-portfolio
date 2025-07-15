@@ -1,5 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { wrap } from 'motion/react';
+import { useSectionStore } from '../store/useSectionStore';
+import { useProjectStore } from '../store/useProjectStore';
+
 
 type CloudSetters = {
   setCloud1X: React.Dispatch<React.SetStateAction<number>>;
@@ -17,7 +20,6 @@ interface UseSlideNavigationOptions {
 
 const useSlideNavigation = (
   page: PageType,
-  length: number,
   clouds?: CloudSetters,
   options?: UseSlideNavigationOptions,
   initialIndex = 0,
@@ -26,6 +28,25 @@ const useSlideNavigation = (
   const [index, setIndex] = useState(initialIndex);
   const [direction, setDirection] = useState<1 | -1>(1);
 
+  const sectionStore = useSectionStore();
+  const projectStore = useProjectStore();
+
+  const homeLength = sectionStore.sections.length;
+  const projectsLength = projectStore.projects.length;
+
+  let length = 0;
+  switch (page) {
+    case 'home':
+      length = homeLength;
+      break;
+    case 'projects':
+      length = projectsLength;
+      break;
+    case 'contact':
+      length = 1;
+      break;
+  }
+
   const setSlide = useCallback(
     (newDirection: 1 | -1) => {
       let next = index + newDirection;
@@ -33,7 +54,7 @@ const useSlideNavigation = (
       switch (page) {
         case 'home':
           if (next < 0) return;
-          if (next >= length) {
+          if (next >= homeLength) {
             options?.onNavigateToProjects?.(0);
             return;
           }
@@ -41,10 +62,10 @@ const useSlideNavigation = (
 
         case 'projects':
           if (next < 0) {
-            options?.onNavigateToHome?.(length - 1);
+            options?.onNavigateToHome?.(homeLength - 1);
             return;
           }
-          if (next >= length) {
+          if (next >= projectsLength) {
             options?.onNavigateToContact?.(0);
             return;
           }
@@ -52,10 +73,10 @@ const useSlideNavigation = (
 
         case 'contact':
           if (next < 0) {
-            options?.onNavigateToProjects?.(length - 1);
+            options?.onNavigateToProjects?.(projectsLength - 1);
             return;
           }
-          if (next >= length) return;
+          if (next >= 1) return;
           break;
       }
 
@@ -73,7 +94,7 @@ const useSlideNavigation = (
         clouds.setCloud3X(prev => prev + newDirection * -200);
       }
     },
-    [index, length, clouds, page, options, setSearchParams]
+    [index, clouds, length, page, options, homeLength, projectsLength, setSearchParams]
   );
 
   useEffect(() => {
@@ -87,13 +108,19 @@ const useSlideNavigation = (
       else if (e.key === 'ArrowLeft') setSlide(-1);
     };
 
+    if (index >= length) {
+      setIndex(length > 0 ? length - 1 : 0);
+    }
+
     window.addEventListener('wheel', handleWheel);
     window.addEventListener('keydown', handleKey);
     return () => {
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('keydown', handleKey);
     };
-  }, [setSlide]);
+
+
+  }, [setSlide, index, length]);
 
   return { index, direction, setSlide };
 };

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getBaseUrl } from '../utils/api';
+import api from '../api/apiClient'; 
 
 type Project = {
   id: number;
@@ -21,9 +21,8 @@ export const useProjectStore = create<ProjectStore>((set) => ({
   fetchProjects: async () => {
     set({ loading: true });
     try {
-      const res = await fetch(`${getBaseUrl()}/project`);
-      const data = await res.json();
-      set({ projects: data, loading: false });
+      const res = await api.get<Project[]>('/project');
+      set({ projects: res.data, loading: false });
     } catch (error) {
       console.error('Failed to fetch projects', error);
       set({ loading: false });

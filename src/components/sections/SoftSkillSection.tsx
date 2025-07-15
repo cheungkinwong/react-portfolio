@@ -6,8 +6,10 @@ const SoftSkillSection = () => {
   const { softSkills, loading, fetchSoftSkills } = useSoftSkillStore();
 
   useEffect(() => {
-    fetchSoftSkills();
-  }, [fetchSoftSkills]);
+    if (softSkills.length === 0) {
+      fetchSoftSkills();
+    }
+  }, [softSkills,fetchSoftSkills]);
 
   if (loading) return <CircularProgress />;
 

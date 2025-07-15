@@ -33,20 +33,21 @@ const getSectionComponent = (sectionId: number) => {
 
 const Home = ({ setCloud1X, setCloud2X, setCloud3X }: HomeProps) => {
   const { sections, loading, fetchSections } = useSectionStore();
-
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialIndex = parseInt(searchParams.get('index') || '0', 10);
   useEffect(() => {
-    fetchSections();
-  }, [fetchSections]);
+    if (sections.length === 0) {
+      fetchSections();
+    }
+  }, [sections, fetchSections]);
 
   const { index, direction, setSlide } = useSlideNavigation(
     'home',
-    sections.length,
     { setCloud1X, setCloud2X, setCloud3X },
-    { onNavigateToProjects: (slideIndex) => navigate(`/projects?index=${slideIndex}`)},
-    initialIndex, setSearchParams
+    { 
+      onNavigateToProjects: (slideIndex) => navigate(`/projects?index=${slideIndex}`),
+    },    initialIndex, setSearchParams
   );
 
   if (loading) {

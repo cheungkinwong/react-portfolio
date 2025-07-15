@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getBaseUrl } from '../utils/api';
+import api from '../api/apiClient'; 
 
 export type SoftSkill = {
   id: number;
@@ -20,9 +20,8 @@ export const useSoftSkillStore = create<SoftSkillStore>((set) => ({
   fetchSoftSkills: async () => {
     set({ loading: true });
     try {
-      const res = await fetch(`${getBaseUrl()}/softskill`);
-      const data = await res.json();
-      set({ softSkills: data, loading: false });
+      const res = await api.get<SoftSkill[]>('/softskill');
+      set({ softSkills: res.data, loading: false });
     } catch (err) {
       console.error('Failed to fetch soft skills', err);
       set({ loading: false });

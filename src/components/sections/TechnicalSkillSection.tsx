@@ -7,8 +7,10 @@ const TechnicalSkillSection = () => {
   const { technicalSkills, loading, fetchTechnicalSkills } = useTechnicalSkillStore();
 
   useEffect(() => {
-    fetchTechnicalSkills();
-  }, [fetchTechnicalSkills]);
+    if (technicalSkills.length === 0) {
+      fetchTechnicalSkills();
+    }
+  }, [technicalSkills,fetchTechnicalSkills]);
 
   if (loading) return <CircularProgress />;
 

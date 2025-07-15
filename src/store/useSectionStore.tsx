@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getBaseUrl } from '../utils/api';
+import api from '../api/apiClient'; 
 
 export type Section = {
   id: number;
@@ -20,9 +20,8 @@ export const useSectionStore = create<SectionStore>((set) => ({
   fetchSections: async () => {
     set({ loading: true });
     try {
-      const res = await fetch(`${getBaseUrl()}/section`);
-      const data = await res.json();
-      set({ sections: data, loading: false });
+      const res = await api.get<Section[]>('/section');
+      set({ sections: res.data, loading: false });
     } catch (err) {
       console.error('Failed to fetch sections', err);
       set({ loading: false });

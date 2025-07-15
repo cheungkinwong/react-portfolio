@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getBaseUrl } from '../utils/api';
+import api from '../api/apiClient'; 
 
 export type WorkExperience = {
   id: number;
@@ -22,9 +22,8 @@ export const useWorkExperienceStore = create<WorkExperienceStore>((set) => ({
   fetchWorkExperiences: async () => {
     set({ loading: true });
     try {
-      const res = await fetch(`${getBaseUrl()}/workexperience`);
-      const data = await res.json();
-      set({ workExperiences: data, loading: false });
+      const res = await api.get<WorkExperience[]>('/workexperience');
+      set({ workExperiences: res.data, loading: false });
     } catch (err) {
       console.error('Failed to fetch work experiences', err);
       set({ loading: false });
