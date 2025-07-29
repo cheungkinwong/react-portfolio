@@ -1,10 +1,11 @@
 import { forwardRef, useEffect } from 'react';
-import { Card,CardContent, Typography, Box, CircularProgress } from '@mui/material';
+import { Card,CardContent, CardMedia ,Typography, Box, CircularProgress } from '@mui/material';
 import { AnimatePresence, usePresenceData, motion } from 'motion/react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+import { useImageExists } from '../hooks/useImageExist';
 import useSlideNavigation from '../hooks/useSlideNavigation';
 import { useSectionStore } from '../store/useSectionStore';
 
@@ -102,11 +103,11 @@ const Home = ({ setCloud1X, setCloud2X, setCloud3X }: HomeProps) => {
 };
 
 const Slide = forwardRef(function Slide(
-  { section }: { section: { id: number; image: string; title: string; description: string } },
+  { section }: { section: { id: number; image: string; imageUrl: string; altText: string; title: string; description: string } },
   ref: React.Ref<HTMLDivElement>
 ) {
   const direction = usePresenceData();
-
+  const imageExists = useImageExists(section.imageUrl);
   return (
     <motion.div
       ref={ref}
@@ -121,16 +122,18 @@ const Slide = forwardRef(function Slide(
         alignItems: 'center',
         width: '100%',
       }}>
-        {/* <CardMedia
-          component="img"
-          image={`/images/${section.image}`} 
-          alt={section.title}
-          sx={{
-            width: { xs: '100%', sm: 260 },
-            height: { xs: 260, sm: 'auto' },
-            objectFit: 'cover'
-          }}
-        /> */}
+        {imageExists && (
+          <CardMedia
+            component="img"
+            image={section.imageUrl}
+            alt={section.altText}
+            sx={{
+              width: { xs: '100%', sm: 260 },
+              height: { xs: 260, sm: 'auto' },
+              objectFit: 'cover'
+            }}
+          />
+        )}
         <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Typography variant="h5" sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' }, color: "secondary.dark" }}>
             {section.title}

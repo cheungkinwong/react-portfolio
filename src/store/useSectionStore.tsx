@@ -1,11 +1,15 @@
 import { create } from 'zustand';
 import api from '../api/apiClient'; 
+import { getBaseUrl } from '../utils/api'; 
+const baseUrl = getBaseUrl().replace(/\/api\/?$/, ''); 
 
 export type Section = {
   id: number;
   title: string;
   description: string;
+  altText: string;
   image: string;
+  imageUrl: string; 
 };
 
 type SectionStore = {
@@ -21,7 +25,11 @@ export const useSectionStore = create<SectionStore>((set) => ({
     set({ loading: true });
     try {
       const res = await api.get<Section[]>('/section');
-      set({ sections: res.data, loading: false });
+      const fullSections = res.data.map((s) => ({
+        ...s,
+        imageUrl: s.image ? `${baseUrl}${s.image}` : '',
+      }));
+      set({ sections: fullSections, loading: false });
     } catch (err) {
       console.error('Failed to fetch sections', err);
       set({ loading: false });

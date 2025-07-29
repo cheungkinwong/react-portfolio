@@ -60,7 +60,7 @@ const App = () => {
         }}
       >
         <CloudBackground x1={cloud1X} x2={cloud2X} x3={cloud3X} />
-
+         {isAuthenticated && (
         <AppBar
           position="static"
           sx={{ backgroundColor: "secondary.light", color: "secondary.main", opacity: 0.9, zIndex: 3 }}
@@ -70,12 +70,11 @@ const App = () => {
             <Button color="inherit" component={Link} to="/">Home</Button>
             <Button color="inherit" component={Link} to="/projects">Projects</Button>
             <Button color="inherit" component={Link} to="/contact">Contact</Button>
-            {isAuthenticated && (
-              <Button color="inherit" onClick={logout}>Logout</Button>
-            )}
+            <Button color="inherit" onClick={logout}>Logout</Button>
+          
           </Toolbar>
         </AppBar>
-
+        )}
         <Container sx={{ mt: 4, zIndex: 4, position: 'relative' }}>
           <Routes>
             <Route

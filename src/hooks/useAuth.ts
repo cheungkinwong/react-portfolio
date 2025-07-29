@@ -24,7 +24,9 @@ export function useAuth() {
     }
 
     try {
-      const payload = JSON.parse(atob(storedToken.split('.')[1]))
+      const base64Payload = storedToken.split('.')[1]
+      const jsonPayload = atob(base64Payload)
+      const payload = JSON.parse(jsonPayload)
       const isExpired = Date.now() >= payload.exp * 1000
       if (isExpired) {
         localStorage.removeItem('token')
@@ -44,13 +46,13 @@ export function useAuth() {
     }
 
     setLoading(false)
-  }, [LOGIN_URL])
+  }, [LOGIN_URL,isAuthenticated, token])
 
   const logout = () => {
+    localStorage.removeItem('token')
     setToken(null)
     setIsAuthenticated(false)
-    localStorage.removeItem('token')
-    window.location.href = LOGIN_URL 
+    window.location.href = LOGIN_URL
   }
 
   return { token, isAuthenticated, logout, loading }

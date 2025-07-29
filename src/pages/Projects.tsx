@@ -1,6 +1,6 @@
 import { forwardRef, useEffect } from 'react';
 import {
-  Box, Card,  CardContent,
+  Box, Card,  CardContent, CardMedia,
   Typography, CardActions, Button, CircularProgress
 } from '@mui/material';
 import { AnimatePresence, usePresenceData, motion } from 'motion/react';
@@ -11,6 +11,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import { useProjectStore } from '../store/useProjectStore';
 import useSlideNavigation from '../hooks/useSlideNavigation';
+import { useImageExists } from '../hooks/useImageExist';
 
 type ProjectsProps = {
   setCloud1X: React.Dispatch<React.SetStateAction<number>>;
@@ -91,11 +92,11 @@ const Projects = ({ setCloud1X, setCloud2X, setCloud3X }: ProjectsProps) => {
 };
 
 const ProjectSlide = forwardRef(function ProjectSlide(
-  { project }: { project: { name: string; description: string; image: string; link: string } },
+  { project }: { project: { name: string; description: string; image: string; imageUrl: string; altText: string; link: string } },
   ref: React.Ref<HTMLDivElement>
 ) {
   const direction = usePresenceData();
-
+  const imageExists = useImageExists(project.imageUrl);
   return (
     <motion.div
       ref={ref}
@@ -110,16 +111,18 @@ const ProjectSlide = forwardRef(function ProjectSlide(
         alignItems: 'center',
         width: '100%',
       }}>
-        {/* <CardMedia
-          component="img"
-          image={project.image}
-          alt={project.name}
-          sx={{
-            width: { xs: '100%', sm: 160 },
-            height: { xs: 160, sm: 'auto' },
-            objectFit: 'cover'
-          }}
-        /> */}
+        {imageExists && (
+          <CardMedia
+            component="img"
+            image={project.imageUrl}
+            alt={project.altText}
+            sx={{
+              width: { xs: '100%', sm: 260 },
+              height: { xs: 260, sm: 'auto' },
+              objectFit: 'cover'
+            }}
+          />
+        )}
         <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Typography variant="h5" sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' }, color: "secondary.dark" }}>
             {project.name}
