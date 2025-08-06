@@ -63,7 +63,7 @@ const App = () => {
          {isAuthenticated && (
         <AppBar
           position="static"
-          sx={{ backgroundColor: "secondary.light", color: "secondary.main", opacity: 0.9, zIndex: 3 }}
+          sx={{ backgroundColor: "white", color: "secondary.main", opacity: 0.85, zIndex: 3 }}
         >
           <Toolbar>
             <Typography variant="h6" sx={{ flexGrow: 1 }}>My Portfolio</Typography>

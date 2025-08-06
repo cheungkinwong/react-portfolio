@@ -1,7 +1,7 @@
 import { forwardRef, useEffect } from 'react';
 import {
-  Box, Card,  CardContent, CardMedia,
-  Typography, CardActions, Button, CircularProgress
+  Box, Card,  CardContent,
+  Typography, CardActions, Button, CircularProgress, IconButton
 } from '@mui/material';
 import { AnimatePresence, usePresenceData, motion } from 'motion/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
@@ -60,15 +60,22 @@ const Projects = ({ setCloud1X, setCloud2X, setCloud3X }: ProjectsProps) => {
   return (
     <Box display="flex" alignItems="center" justifyContent="center" position="relative" height="80vh" zIndex={4}>
   
-        <motion.button
-          initial={false}
-          aria-label="Previous"
-          style={{ position: 'absolute', left: 0, background: 'none', border: 'none', cursor: 'pointer' }}
+        <IconButton
+          aria-label="previous"
           onClick={() => setSlide(-1)}
-          whileTap={{ scale: 0.9 }}
+          sx={{
+            position: 'absolute',
+            left: 0,
+            border: 'none',
+            cursor: 'pointer',
+            backgroundColor: 'transparent',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.85)',
+            },
+          }}
         >
-          <ArrowBackIosIcon sx={{ color: "secondary.main" }} />
-        </motion.button>
+          <ArrowBackIosIcon sx={{ color: 'secondary.main', ml:'4px' }} />
+        </IconButton>
 
 
       <Box width="100%" maxWidth={{ xs: 300, sm: 500, md: 600 }} mx="auto">
@@ -77,16 +84,22 @@ const Projects = ({ setCloud1X, setCloud2X, setCloud3X }: ProjectsProps) => {
         </AnimatePresence>
       </Box>
 
-   
-        <motion.button
-          initial={false}
+     <IconButton
           aria-label="Next"
-          style={{ position: 'absolute', right: 0, background: 'none', border: 'none', cursor: 'pointer' }}
           onClick={() => setSlide(1)}
-          whileTap={{ scale: 0.9 }}
+          sx={{
+            position: 'absolute',
+            right: 0,
+            border: 'none',
+            cursor: 'pointer',
+            backgroundColor: 'transparent',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.85)',
+            },
+          }}
         >
-          <ArrowForwardIosIcon sx={{ color: "secondary.main" }} />
-        </motion.button>
+          <ArrowForwardIosIcon sx={{ color: 'secondary.main' }} />
+        </IconButton>
     </Box>
   );
 };
@@ -104,37 +117,62 @@ const ProjectSlide = forwardRef(function ProjectSlide(
       animate={{ opacity: 1, x: 0, transition: { delay: 0.1, type: 'spring', bounce: 0.3 } }}
       exit={{ opacity: 0, x: direction * -300 }}
     >
-      <Card sx={{
-        opacity: 0.7,
-        display: 'flex',
-        flexDirection: { xs: 'column', sm: 'row' },
-        alignItems: 'center',
-        width: '100%',
-      }}>
-        {imageExists && (
-          <CardMedia
-            component="img"
-            image={project.imageUrl}
-            alt={project.altText}
-            sx={{
-              width: { xs: '100%', sm: 260 },
-              height: { xs: 260, sm: 'auto' },
-              objectFit: 'cover'
-            }}
-          />
-        )}
-        <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <Typography variant="h5" sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' }, color: "secondary.dark" }}>
-            {project.name}
-          </Typography>
-          <Typography>{project.description}</Typography>
-          <CardActions sx={{ justifyContent: 'flex-end', paddingX: 0 }}>
-            <Button variant="contained" sx={{ backgroundColor: 'secondary.light', color: 'secondary.main' }} size="small" href={project.link} target="_blank" rel="noopener noreferrer">
-              View
-            </Button>
-          </CardActions>
-        </CardContent>
-      </Card>
+      <Card
+              sx={{
+                opacity: 0.85,
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'stretch', 
+                width: '100%',
+                overflow: 'visible', 
+              }}
+            >
+              {imageExists && (
+                <Box
+                  sx={{
+                    width: { xs: '100%', sm: 260 }, 
+                    position: 'relative',
+                    flexShrink: 0,
+                    minHeight: { xs: 260, sm: 'auto' }, 
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={project.imageUrl}
+                    alt={project.altText}
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      borderTopLeftRadius: { xs: 4, sm: 4 },
+                      borderBottomLeftRadius: { xs: 4, sm: 4 }, 
+                    }}
+                  />
+                </Box>
+              )}
+      
+              <CardContent
+                sx={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}
+              >
+                <Typography variant="h5" sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' }, color: "secondary.dark" }}>
+                    {project.name}
+                  </Typography>
+                <Typography>{project.description}</Typography>
+                <CardActions sx={{ justifyContent: 'flex-end', paddingX: 0 }}>
+                    <Button variant="contained" sx={{ backgroundColor: 'secondary.light', color: 'secondary.main' }} size="small" href={project.link} target="_blank" rel="noopener noreferrer">
+                      View
+                    </Button>
+                </CardActions>
+              </CardContent>
+            </Card>
     </motion.div>
   );
 });

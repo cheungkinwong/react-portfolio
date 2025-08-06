@@ -1,5 +1,5 @@
 import { forwardRef, useEffect } from 'react';
-import { Card,CardContent, CardMedia ,Typography, Box, CircularProgress } from '@mui/material';
+import { Card,CardContent ,Typography, Box, CircularProgress, IconButton } from '@mui/material';
 import { AnimatePresence, usePresenceData, motion } from 'motion/react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -70,15 +70,22 @@ const Home = ({ setCloud1X, setCloud2X, setCloud3X }: HomeProps) => {
   return (
     <Box display="flex" alignItems="center" justifyContent="center" position="relative" height="80vh" zIndex={4}>
       {index > 0 && (
-        <motion.button
-          initial={false}
-          aria-label="Previous"
-          style={{ position: 'absolute', left: 0, background: 'none', border: 'none', cursor: 'pointer' }}
+        <IconButton
+          aria-label="previous"
           onClick={() => setSlide(-1)}
-          whileTap={{ scale: 0.9 }}
+          sx={{
+            position: 'absolute',
+            left: 0,
+            border: 'none',
+            cursor: 'pointer',
+            backgroundColor: 'transparent',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.85)',
+            },
+          }}
         >
-          <ArrowBackIosIcon sx={{ color: "secondary.main" }} />
-        </motion.button>
+          <ArrowBackIosIcon sx={{ color: 'secondary.main', ml:'4px' }} />
+        </IconButton>
       )}
 
       <Box width="100%" maxWidth={{ xs: 300, sm: 500, md: 600 }} mx="auto">
@@ -87,16 +94,23 @@ const Home = ({ setCloud1X, setCloud2X, setCloud3X }: HomeProps) => {
         </AnimatePresence>
       </Box>
 
-  
-        <motion.button
-          initial={false}
+        <IconButton
           aria-label="Next"
-          style={{ position: 'absolute', right: 0, background: 'none', border: 'none', cursor: 'pointer' }}
           onClick={() => setSlide(1)}
-          whileTap={{ scale: 0.9 }}
+          sx={{
+            position: 'absolute',
+            right: 0,
+            border: 'none',
+            cursor: 'pointer',
+            backgroundColor: 'transparent',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.85)',
+            },
+          }}
         >
-          <ArrowForwardIosIcon sx={{ color: "secondary.main" }} />
-        </motion.button>
+          <ArrowForwardIosIcon sx={{ color: 'secondary.main' }} />
+        </IconButton>
+
 
     </Box>
   );
@@ -115,33 +129,65 @@ const Slide = forwardRef(function Slide(
       animate={{ opacity: 1, x: 0, transition: { delay: 0.1, type: 'spring', bounce: 0.3 } }}
       exit={{ opacity: 0, x: direction * -300 }}
     >
-      <Card sx={{
-        opacity: 0.85,
-        display: 'flex',
-        flexDirection: { xs: 'column', sm: 'row' },
-        alignItems: 'center',
-        width: '100%',
-      }}>
+      <Card
+        sx={{
+          opacity: 0.85,
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          alignItems: 'stretch', 
+          width: '100%',
+          overflow: 'visible', 
+        }}
+      >
         {imageExists && (
-          <CardMedia
-            component="img"
-            image={section.imageUrl}
-            alt={section.altText}
+          <Box
             sx={{
-              width: { xs: '100%', sm: 260 },
-              height: { xs: 260, sm: 'auto' },
-              objectFit: 'cover'
+              width: { xs: '100%', sm: 260 }, 
+              position: 'relative',
+              flexShrink: 0,
+              minHeight: { xs: 260, sm: 'auto' }, 
             }}
-          />
+          >
+            <Box
+              component="img"
+              src={section.imageUrl}
+              alt={section.altText}
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                borderTopLeftRadius: { xs: 4, sm: 4 },
+                borderBottomLeftRadius: { xs: 4, sm: 4 }, 
+              }}
+            />
+          </Box>
         )}
-        <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <Typography variant="h5" sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' }, color: "secondary.dark" }}>
+
+        <CardContent
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' },
+              color: 'secondary.dark',
+            }}
+          >
             {section.title}
           </Typography>
           <Typography sx={{ mb: 2 }}>{section.description}</Typography>
           {getSectionComponent(section.id)}
         </CardContent>
       </Card>
+
     </motion.div>
   );
 });

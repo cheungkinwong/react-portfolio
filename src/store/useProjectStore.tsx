@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import api from '../api/apiClient'
 import { getBaseUrl } from '../utils/api'
 
-const baseUrl = getBaseUrl().replace(/\/api\/?$/, '')
+const baseUrl = getBaseUrl()
 
 export type Project = {
   id: number
