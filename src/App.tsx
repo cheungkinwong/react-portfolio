@@ -66,7 +66,7 @@ const App = () => {
           sx={{ backgroundColor: "white", color: "secondary.main", opacity: 0.85, zIndex: 3 }}
         >
           <Toolbar>
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>My Portfolio</Typography>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>Portfolio Cheung Kin Wong</Typography>
             <Button color="inherit" component={Link} to="/">Home</Button>
             <Button color="inherit" component={Link} to="/projects">Projects</Button>
             <Button color="inherit" component={Link} to="/contact">Contact</Button>

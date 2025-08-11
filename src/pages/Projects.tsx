@@ -168,7 +168,7 @@ const ProjectSlide = forwardRef(function ProjectSlide(
                 <Typography>{project.description}</Typography>
                 <CardActions sx={{ justifyContent: 'flex-end', paddingX: 0 }}>
                     <Button variant="contained" sx={{ backgroundColor: 'secondary.light', color: 'secondary.main' }} size="small" href={project.link} target="_blank" rel="noopener noreferrer">
-                      View
+                      Github
                     </Button>
                 </CardActions>
               </CardContent>
