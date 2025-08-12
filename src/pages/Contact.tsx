@@ -12,12 +12,13 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import useSlideNavigation from '../hooks/useSlideNavigation';
 import api from '../api/apiClient'; 
-import { getBaseUrl } from '../utils/api'; 
+import { getAPIUrl, getBaseUrl } from '../utils/api'; 
 const baseUrl = getBaseUrl()
+const apiUrl = getAPIUrl()
 const imageUrl = `${baseUrl}/images/handshake.jpg`;
 const downloadCv = async () => {
   try {
-    const response = await api.get(`${baseUrl}/cv/download`, {
+    const response = await api.get(`${apiUrl}/cv/download`, {
       responseType: 'blob', 
     })
     const blob = new Blob([response.data], { type: 'application/pdf' })
