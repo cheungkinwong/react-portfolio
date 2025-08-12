@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Container, CssBaseline } from '@mui/material';
 import { useState, useEffect, useMemo } from 'react';
 import { motion, useAnimation } from 'motion/react';
@@ -67,9 +67,9 @@ const App = () => {
         >
           <Toolbar>
             <Typography variant="h6" sx={{ flexGrow: 1 }}>Portfolio Cheung Kin Wong</Typography>
-            <Button color="inherit" component={Link} to="/">Home</Button>
-            <Button color="inherit" component={Link} to="/projects">Projects</Button>
-            <Button color="inherit" component={Link} to="/contact">Contact</Button>
+            <Button color="inherit" component={NavLink} to="/"   sx={{ '&.active': { backgroundColor: 'secondary.light' }}}>Home</Button>
+            <Button color="inherit" component={NavLink} to="/projects"   sx={{ '&.active': {  backgroundColor: 'secondary.light' }}}>Projects</Button>
+            <Button color="inherit" component={NavLink} to="/contact"   sx={{ '&.active': { backgroundColor: 'secondary.light' }}}>Contact</Button>
             <Button color="inherit" onClick={logout}>Logout</Button>
           
           </Toolbar>

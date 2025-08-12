@@ -4,6 +4,7 @@ import {
   CardContent,
   Typography,
   IconButton,
+  Link,
   CardActions, Button,
 } from '@mui/material';
 import { motion } from 'motion/react';
@@ -136,17 +137,21 @@ const Contact = ({
               <Typography variant="h5" sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' }, color: 'secondary.dark' }}>
                 Contact Me
               </Typography>
-              <Typography>cheungkin.wong@mail.com</Typography>
+              <Typography>
+                <Link href="mailto:cheungkin.wong@gmail.com" target="_blank" sx={{ color: 'secondary.main', textDecoration: 'none' }}>
+                  cheungkin.wong@gmail.com
+                </Link>
+                </Typography>
               <Typography>+32 485 47 41 48</Typography>
               <Typography>
-                <a
+                <Link
                   href="https://www.linkedin.com/in/cheungkin/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: 'inherit', textDecoration: 'none' }}
+                  sx={{ color: 'secondary.main', textDecoration: 'none' }}
                 >
                   www.linkedin.com/in/cheungkin/
-                </a>
+                </Link>
               </Typography>
               <Typography>Antwerp, Belgium</Typography>
               <CardActions sx={{ justifyContent: 'flex-end', paddingX: 0 }}>
