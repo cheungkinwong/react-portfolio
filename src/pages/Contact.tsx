@@ -25,7 +25,7 @@ const downloadCv = async () => {
     const url = window.URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.setAttribute('download', 'cv.pdf')
+    link.setAttribute('download', 'cv-cheungkinwong.pdf')
     document.body.appendChild(link)
     link.click()
     link.remove()
